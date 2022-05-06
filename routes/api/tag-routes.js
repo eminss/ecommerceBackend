@@ -46,14 +46,14 @@ router.put('/:id', (req, res) => {
   Tag.update(req.body, {
     where: {
       id: req.params.id
-    }.then(dbTags => {
-      res.json(dbTags);
+    }
+  }).then(updatedTags => {
+      res.json(updatedTags);
     })
     .catch(err => {
       console.log(err);
       res.status(500).json({message: "An error occurred", err })
     })
-  })
 });
 
 router.delete('/:id', (req, res) => {
