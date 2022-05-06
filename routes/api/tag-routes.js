@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
-  Tag.findByPk(req.params.id)
+  Tag.findByPk(req.params.id, {include: [{model: Product, ProductTag}]})
   .then(dbTags => {
     res.json(dbTags);
   })
@@ -58,17 +58,17 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
-  Tag.destroy(req.body, {
+  Tag.destroy({
     where: {
-      id: req.params.params
-    }.then (delTag => {
+      id: req.params.id
+    }
+  }).then (delTag => {
       res.json(delTag)
     })
     .catch(err => {
       console.log(err);
       res.status(500).json({message: "An error occurred", err })
     })
-  })
 });
 
 module.exports = router;
